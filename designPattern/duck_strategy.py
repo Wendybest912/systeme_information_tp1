@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
+from weatherstation_observer import Subject
 
-class Duck(ABC):
+class Duck(ABC, Subject):
     def __init__(self, fly_behavior, quack_behavior, display_behavior):
         self.fly_behavior = fly_behavior
         self.quack_behavior =  quack_behavior
@@ -19,6 +20,9 @@ class Duck(ABC):
     def display(self):
         self.display_behavior.display()
 
+    def notify(self):
+        for observer in self.observers:
+            observer.notify(self)
 
 
 
@@ -87,6 +91,7 @@ class RubberDuck(Duck):
     def __init__(self):
         super().__init__(fly_behavior=FlyNone(),quack_behavior=QuackNot(), display_behavior=DisplayNotReal())
         
+
 
 if __name__ == '__main__':
     donald = MallardDuck()
